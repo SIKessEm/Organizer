@@ -1,0 +1,33 @@
+{
+  "name": "sikessem/organizer",
+  "type": "library",
+  "description": "A PHP file manager",
+  "license": "Apache-2.0",
+  "keywords": [
+    "organizer",
+    "sikessem"
+  ],
+  "authors": [{
+    "name": "SIGUI kessé Emmanuel",
+    "email": "sikessem@omninf.com",
+    "role": "Developer"
+  }],
+  "support": {
+    "source": "https://github.com/SIKessEm/Organizer"
+  },
+  "autoload": {
+    "psr-4": {
+      "SIKessEm\\Organizer\\": "lib"
+    }
+  },
+  "require": {
+    "php": ">=8.0"
+  },
+  "config": {
+    "vendor-dir": "pkg",
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
