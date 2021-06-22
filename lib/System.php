@@ -3,9 +3,16 @@ declare(strict_types=1);
 
 namespace SIKessEm\Organizer;
 
+/**
+ * The system class
+ *
+ * @author SIGUI Kessé Emmanuel
+ * @package sikessem/organizer
+ * @license Apache-2.0
+ */
 class System {
   /**
-   * Create a new organizer
+   * Create a new system
    *
    * @param string $dir The system directory
    */
@@ -28,9 +35,9 @@ class System {
    * Import a file
    *
    * @param string $path The file path
-   * @param array $vars The vars required
+   * @param array $vars Required vars
    * @param boolean $once Include once ?
-   * @return mixed The value of the file
+   * @return mixed The file returned value
    */
   function import(string $path, array $vars = [], bool $once = true): mixed {
     return (new Source($this->path($path), $once, $vars))->include();
