@@ -73,7 +73,7 @@ Please send any sensitive issue to [sikessem@omninf.com](mailto:sikessem@omninf.
 
 
 ## License
-Organizer is licensed under the GPL-3 License - see the [LICENSE](./LICENSE) file for details.
+Organizer is licensed under the Apache 2.0 License - see the [LICENSE](./LICENSE) file for details.
 
 
 ## Contribution
