@@ -7,13 +7,16 @@
         "organizer",
         "sikessem"
     ],
+    "readme": "README.md",
     "authors": [{
+        "homepage": "https://sikessem.omninf.com",
         "name": "SIGUI kessé Emmanuel",
         "email": "sikessem@omninf.com",
         "role": "Developer"
     }],
     "support": {
-        "source": "https://github.com/SIKessEm/Organizer"
+        "source": "https://github.com/SIKessEm/Organizer",
+        "issues": "https://github.com/SIKessEm/Organizer/issues"
     },
     "autoload": {
         "files": ["lib/autoload.php"]
