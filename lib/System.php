@@ -10,7 +10,7 @@ namespace SIKessEm\Organizer;
  * @package sikessem/organizer
  * @license Apache-2.0
  */
-class System {
+class System extends AbstractSystem {
   use SystemTrait;
 
   /**
