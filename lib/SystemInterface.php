@@ -15,6 +15,7 @@ interface SystemInterface {
    * Initialize the system
    *
    * @param string $dir The system directory
+   * @return self
    */
   function init(string $dir): self;
 
