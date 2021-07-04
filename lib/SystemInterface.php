@@ -42,14 +42,13 @@ interface SystemInterface {
   /**
    * Load objects automatically
    *
-   * @param string $path The objects path
-   * @param string $pack The objects namespace
+   * @param string $ns The objects namespace
    * @param string $pattern The objects pattern
    * @param string $subject The objects subject
    * @param array $globals The vars used
    * @return callable The autoload handle
    */
-  public function load(string $path, string $pack = '', string $pattern = '.*', string $subject = '\\0', array $vars = []): callable;
+  public function load(string $ns = '', string $pattern = '.*', string $subject = '\\0', array $vars = []): callable;
 
   /**
    * Unload objects automatically

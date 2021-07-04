@@ -58,20 +58,14 @@ trait SystemTrait {
   /**
    * Load objects automatically
    *
-   * @param string $path The objects path
-   * @param string $pack The objects namespace
+   * @param string $ns The objects namespace
    * @param string $pattern The objects pattern
    * @param string $subject The objects subject
    * @param array $globals The vars used
    * @return callable The autoload handle
    */
-  function load(string $path, string $pack = '', string $pattern = '.*', string $subject = '\\0', array $vars = []): callable {
-  	$loader = function(string $object) use ($path, $pack, $pattern, $subject, $vars) {
-  		if(preg_match('/^' . (empty($pack) ? '' : preg_quote("$pack\\", '/')) . '(' . $pattern . ')$/', $object, $matches))
-  			$this->import($path . '.' . preg_replace("/^$pattern$/", $subject, $matches[1] ?? $matches[0]), $vars);
-  	};
-  	spl_autoload_register($loader);
-  	return $loader;
+  function load(string $ns = '', string $pattern = '.*', string $subject = '\\0', array $vars = []): callable {
+  	return (new Package($this->folder, $ns))->load($pattern, $subject, $vars);
   }
 
   /**
