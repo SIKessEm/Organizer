@@ -50,16 +50,12 @@ trait SystemTrait {
    * Get the real path of a name
    *
    * @param string $name The path name
-   * @param string $extension The path extension
+   * @param array|string $extensions The path extensions
    * @throws \RuntimeException If the name is not valid
    * @return false|string The path file real name if exists
    */
-  function path(string $name, string $extension = 'php'): string {
-  	if(preg_match('/[\/:*?"<>|]/U', $name))
-  		throw new \RuntimeException("Invalid name $name given", E_USER_ERROR);
-  	while(!is_file($file = $this->dir() . "$name.$extension") && is_int($sepos = strpos($name, '.')))
-  		$name = substr_replace($name, DIRECTORY_SEPARATOR, $sepos, 1);
-  	return is_readable($file) ? $file : '';
+  function path(string $name, array|string $extensions = 'php'): string {
+    return (new Path($this->dir, $name, $extensions))->getFile();
   }
 
   /**
