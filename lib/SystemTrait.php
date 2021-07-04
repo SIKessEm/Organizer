@@ -19,20 +19,17 @@ trait SystemTrait {
    * @return self
    */
   function init(string $dir): self {
-    if(!is_dir($dir))
-      throw new \InvalidArgumentException("No such directory $dir");
-    $this->dir = realpath($dir) . DIRECTORY_SEPARATOR;
+    if(!isset($this->folder))
+      $this->folder = new Folder($dir);
+    else
+      $this->folder->setName($dir);
     return $this;
   }
 
   /**
-   * Get the system directory
-   *
-   * @return string The system directory
+   * @var namespace\Folder The system folder
    */
-  function dir(): string {
-    return $this->dir;
-  }
+  protected Folder $folder;
 
   /**
    * Import a file
@@ -55,7 +52,7 @@ trait SystemTrait {
    * @return false|string The path file real name if exists
    */
   function path(string $name, array|string $extensions = 'php'): string {
-    return (new Path($this->dir, $name, $extensions))->getFile();
+    return (new Path($this->folder, $name, $extensions))->getFile();
   }
 
   /**

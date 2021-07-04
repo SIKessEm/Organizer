@@ -20,13 +20,6 @@ interface SystemInterface {
   function init(string $dir): self;
 
   /**
-   * Get the system directory
-   *
-   * @return string The system directory
-   */
-  public function dir(): string;
-
-  /**
    * Import a file
    *
    * @param string $path The file path

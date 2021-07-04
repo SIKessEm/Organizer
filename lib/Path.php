@@ -17,34 +17,14 @@ class Path implements Gettable, Settable {
   /**
    * Create a new path
    *
-   * @param string $dir The path dir
+   * @param string $folder The path folder
    * @param string $pattern The path pattern
    * @param array|string $extensions The path extensions
    */
-  function __construct(string $dir, string $pattern, array|string $extensions) {
-    $this->setDir($dir)
-         ->setPattern($pattern)
+  function __construct(protected Folder $folder, string $pattern, array|string $extensions) {
+    $this->setPattern($pattern)
          ->setExtensions((array) $extensions);
   }
-
-  /**
-   * Set the dir
-   *
-   * @param string $dir The path dir
-   * @throws namespace\Error If the directory does not exist
-   * @return self
-   */
-  function setDir(string $dir): self {
-    if(!is_dir($dir))
-      throw new Error("No such directory $dir", Error::NOT_DIRECTORY);
-    $this->dir = realpath($dir) . DIRECTORY_SEPARATOR;
-    return $this;
-  }
-
-  /**
-   * @var string The path dir
-   */
-  protected string $dir;
 
   /**
    * Set the pattern
@@ -101,7 +81,7 @@ class Path implements Gettable, Settable {
   public function getFile(): string {
     foreach($this->extensions as $extension) {
       $name = $this->pattern;
-    	while(!is_file($file = $this->dir . "$name.$extension") && is_int($sepos = strpos($name, '.')))
+    	while(!is_file($file = $this->folder->name . "$name.$extension") && is_int($sepos = strpos($name, '.')))
     		$name = substr_replace($name, DIRECTORY_SEPARATOR, $sepos, 1);
   	  if(is_readable($file))
         return $file;
