@@ -4,17 +4,17 @@ declare(strict_types=1);
 namespace SIKessEm\Organizer;
 
 /**
- * The source class
+ * The module class
  *
  * @author SIGUI Kessé Emmanuel
  * @package sikessem/organizer
  * @license Apache-2.0
  */
-class Source {
+class Module {
   /**
-   * Create a new source
+   * Create a new module
    *
-   * @param string $file The source file
+   * @param string $file The module file
    * @param string $once Include once ?
    * @param string $vars Required vars
    */
@@ -25,16 +25,16 @@ class Source {
   }
 
   /**
-   * @var string The source file
+   * @var string The module file
    */
   protected string $file;
 
   /**
-   * Include the source file
+   * Import the module file
    *
    * @return mixed The file returned value
    */
-  function include(): mixed {
+  function import(): mixed {
     extract($this->vars);
     return $this->once ? require_once $this->file : require $this->file;
   }

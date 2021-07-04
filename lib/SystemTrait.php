@@ -43,7 +43,7 @@ trait SystemTrait {
    * @return mixed The file returned value
    */
   function import(string $path, array $vars = [], bool $once = true): mixed {
-    return (new Source($this->path($path), $once, $vars))->include();
+    return (new Module($this->path($path), $once, $vars))->import();
   }
 
   /**
