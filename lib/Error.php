@@ -38,4 +38,9 @@ class Error extends \Error {
    * The code of an invalid namespace
    */
   const INVALID_NAMESPACE = 0x06;
+
+  /**
+   * The code of an invalid var name
+   */
+  const INVALID_VARNAME = 0x07;
 }
