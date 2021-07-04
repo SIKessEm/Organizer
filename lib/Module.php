@@ -15,8 +15,8 @@ class Module {
    * Create a new module
    *
    * @param string $file The module file
-   * @param string $once Include once ?
-   * @param string $vars Required vars
+   * @param bool $once Include once ?
+   * @param array $vars Required vars
    */
   function __construct(string $file, protected bool $once, protected array $vars){
     if(!is_file($file))
