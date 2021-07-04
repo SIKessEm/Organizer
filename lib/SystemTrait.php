@@ -40,19 +40,7 @@ trait SystemTrait {
    * @return mixed The file returned value
    */
   function import(string $path, array $vars = [], bool $once = true): mixed {
-    return (new Module($this->path($path), $once, $vars))->import();
-  }
-
-  /**
-   * Get the real path of a name
-   *
-   * @param string $name The path name
-   * @param array|string $extensions The path extensions
-   * @throws \RuntimeException If the name is not valid
-   * @return false|string The path file real name if exists
-   */
-  function path(string $name, array|string $extensions = 'php'): string {
-    return (new Path($this->folder, $name, $extensions))->getFile();
+    return $this->module($path, $vars, $once)->import();
   }
 
   /**
@@ -65,7 +53,7 @@ trait SystemTrait {
    * @return callable The autoload handle
    */
   function load(string $ns = '', string $pattern = '.*', string $subject = '\\0', array $vars = []): callable {
-  	return (new Package($this->folder, $ns))->load($pattern, $subject, $vars);
+  	return $this->package($ns)->load($pattern, $subject, $vars);
   }
 
   /**
@@ -92,5 +80,27 @@ trait SystemTrait {
     if(empty($render) || !is_string($render)) $render = ob_get_contents();
     ob_end_clean();
     return $render;
+  }
+
+  /**
+   * Get a module of the system
+   *
+   * @param string $name The module name
+   * @param bool $once The module is it once ?
+   * @param array $vars The module required vars
+   * @return namespace\Module The module getted
+   */
+  public function module(string $name, array $vars = [], bool $once = true): Module {
+    return new Module($this->folder, $name, $once, $vars);
+  }
+
+  /**
+   * Get a package of the system
+   *
+   * @param string $ns The package namespace
+   * @return namespace\Package The package getted
+   */
+  public function package(string $ns): Package {
+    return new Package($this->folder, $ns);
   }
 }

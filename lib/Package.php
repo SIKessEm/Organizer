@@ -54,13 +54,23 @@ class Package implements Gettable, Settable {
   function load(string $pattern = '.*', string $subject = '\\0', array $vars = []): callable {
   	$loader = function(string $object) use ($pattern, $subject, $vars) {
       $ns = $this->ns;
-  		if(preg_match('/^' . (empty($ns) ? '' : preg_quote("$ns\\", '/')) . '(' . $pattern . ')$/', $object, $matches)) {
-        if($file = (new Path($this->folder, preg_replace("/^$pattern$/", $subject, $matches[1] ?? $matches[0]), ['php']))->getFile())
-          return (new Module($file, true, $vars))->import();
-      }
+  		if(preg_match('/^' . (empty($ns) ? '' : preg_quote("$ns\\", '/')) . '(' . $pattern . ')$/', $object, $matches))
+        return $this->module(preg_replace("/^$pattern$/", $subject, $matches[1] ?? $matches[0]), $vars)->import();
   	};
   	spl_autoload_register($loader);
   	return $loader;
+  }
+
+  /**
+   * Get a module of the package
+   *
+   * @param string $name The module name
+   * @param bool $once The module is it once ?
+   * @param array $vars The module required vars
+   * @return namespace\Module The module getted
+   */
+  public function module(string $name, array $vars = [], bool $once = true): Module {
+    return new Module($this->folder, $name, $once, $vars);
   }
 
   /**
