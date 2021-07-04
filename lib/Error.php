@@ -33,4 +33,9 @@ class Error extends \Error {
    * The code of an invalid extension
    */
   const INVALID_EXTENSION = 0x05;
+
+  /**
+   * The code of an invalid namespace
+   */
+  const INVALID_NAMESPACE = 0x06;
 }
