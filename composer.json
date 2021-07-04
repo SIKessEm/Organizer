@@ -4,6 +4,7 @@
     "description": "A PHP file manager",
     "license": "Apache-2.0",
     "keywords": [
+        "filesystem",
         "organizer",
         "sikessem"
     ],
