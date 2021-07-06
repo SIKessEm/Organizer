@@ -43,4 +43,14 @@ class Error extends \Error {
    * The code of an invalid var name
    */
   const INVALID_VARNAME = 0x07;
+
+  /**
+   * The code of not readable file
+   */
+  const NOT_READABLE = 0x08;
+
+  /**
+   * The code of not file
+   */
+  const NOT_FILE = 0x09;
 }
