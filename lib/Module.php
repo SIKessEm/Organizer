@@ -15,47 +15,37 @@ class Module implements Gettable, Settable  {
   use Getter, Setter;
 
   /**
-   * Modules extensions list
-   */
-  const EXTENSIONS = [
-    'module.php',
-    'mod.php',
-    'm.php',
-    'php',
-  ];
-
-  /**
    *
    * Create a new module
-   * @param string $folder The module folder
-   * @param string $name The module name
+   * @param string $file The module file
    * @param bool $once The module is it once ?
    * @param array $vars The module required vars
    */
-  function __construct(protected Folder $folder, string $name, protected bool $once, array $vars = []) {
-    $this->setName($name);
-    $this->isOnce($once);
+  function __construct(string $file, bool $once, array $vars = []) {
+    $this->setFile($file)->isOnce($once);
     $this->setVars($vars, true);
   }
 
   /**
-   * Set the name
+   * Set the module file
    *
-   * @param string $name The module name
-   * @throws namespace\Error If invalid name given
+   * @param string $file The module file
+   * @throws namespace\Error If the file does not exist or is not readable
    * @return self
    */
-  function setName(string $name): self {
-  	if(preg_match('/[\/:*?"<>|]/U', $name))
-  		throw new Error("Invalid name $name given", Error::INVALID_PATTERN);
-    $this->name = $name;
+  function setFile(string $file): self {
+    if(!is_file($file))
+      throw new Error("No such file $file", Error::NOT_FILE);
+    if(!is_readable($file))
+      throw new Error("Cannot read file $file", Error::NOT_READABLE);
+    $this->file = realpath($file);
     return $this;
   }
 
   /**
-   * @var string The module name
+   * @var string The module file
    */
-  protected string $name;
+  protected string $file;
 
   /**
    * Check if the module is once
@@ -66,6 +56,11 @@ class Module implements Gettable, Settable  {
   function isOnce(?bool $once = null): bool {
     return !isset($once) ? $this->once : $this->once = $once;
   }
+
+  /**
+   * @var bool|null The module is it once ?
+   */
+  protected bool $once;
 
   /**
    * Set vars
@@ -110,16 +105,6 @@ class Module implements Gettable, Settable  {
    */
   function import(): mixed {
     extract($this->vars);
-    return $this->once ? require_once $this->file() : require $this->file();
-  }
-
-  public function file(): string {
-    foreach(self::EXTENSIONS as $extension) {
-      $name = $this->name;
-    	while(!is_file($file = $this->folder->name . "$name.$extension") && is_int($sepos = strpos($name, '.')))
-    		$name = substr_replace($name, DIRECTORY_SEPARATOR, $sepos, 1);
-  	  if(is_readable($file))
-        return $file;
-    } return '';
+    return $this->once ? require_once $this->file : require $this->file;
   }
 }
